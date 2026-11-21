@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet"
@@ -45,7 +45,7 @@
             <li><a href="#contact">Contact</a></li>
         </ul>
 
-        <a href="#contact" class="nav-btn">Let's Talk <i class="fas fa-arrow-right"></i></a>
+        <a href="#contact" class="nav-btn">Hire Talent <i class="fas fa-arrow-right"></i></a>
 
     </nav>
 </header>
@@ -79,16 +79,12 @@
             </p>
 
             <div class="hero-buttons">
-
-                <a href="#contact" class="btn primary-btn">
-                    Get Started
-                    <i class="fas fa-arrow-right"></i>
+                <a href="#contact" class="btn primary-btn" data-interest="Hiring">
+                    Find Top Talent <i class="fas fa-arrow-right"></i>
                 </a>
-
-                <a href="#services" class="btn secondary-btn">
-                    Explore Services
+                <a href="#opportunities" class="btn secondary-btn" data-interest="Job opportunity">
+                    Explore Open Roles
                 </a>
-
             </div>
 
             <div class="hero-trust">
@@ -117,36 +113,52 @@
     </div>
 </section>
 
+<!-- TWO AUDIENCE PATHWAYS -->
+<section class="audience section" id="opportunities">
+    <div class="container audience-grid">
+        <a class="audience-card employer-card reveal" href="#contact" data-interest="Hiring">
+            <span class="audience-icon"><i class="fas fa-building"></i></span>
+            <span class="tag">FOR EMPLOYERS</span>
+            <h2>Build a team that moves your business forward.</h2>
+            <p>Tell us what you need. We’ll help you connect with talent aligned to your roles and goals.</p>
+            <span class="audience-link">Hire Talent <i class="fas fa-arrow-right"></i></span>
+        </a>
+        <a class="audience-card candidate-card reveal" href="#contact" data-interest="Job opportunity">
+            <span class="audience-icon"><i class="fas fa-user-tie"></i></span>
+            <span class="tag">FOR CANDIDATES</span>
+            <h2>Take the next step in your career.</h2>
+            <p>Share your interests and experience so our team can understand the opportunities you’re looking for.</p>
+            <span class="audience-link">Explore Opportunities <i class="fas fa-arrow-right"></i></span>
+        </a>
+    </div>
+</section>
 
-<!-- STATISTICS SECTION -->
+
+<!-- TRUST PILLARS (REPLACES UNVERIFIED COUNTERS) -->
+<section class="stats section">
 <section class="stats section">
 
     <div class="container stats-grid">
-
         <div class="stat-box reveal">
-            <i class="fas fa-briefcase"></i>
-            <h2 class="counter" data-target="10" data-suffix="+">0</h2>
-            <p>Years of Experience</p>
+            <i class="fas fa-bullseye"></i>
+            <h2>Role-focused</h2>
+            <p>Hiring requirements first</p>
         </div>
-
         <div class="stat-box reveal">
-            <i class="fas fa-building"></i>
-            <h2 class="counter" data-target="100" data-suffix="+">0</h2>
-            <p>Business Partners</p>
+            <i class="fas fa-user-check"></i>
+            <h2>People-first</h2>
+            <p>Talent and opportunity</p>
         </div>
-
         <div class="stat-box reveal">
-            <i class="fas fa-user-tie"></i>
-            <h2 class="counter" data-target="500" data-suffix="+">0</h2>
-            <p>Talent Connections</p>
+            <i class="fas fa-route"></i>
+            <h2>Structured</h2>
+            <p>A clear recruitment process</p>
         </div>
-
         <div class="stat-box reveal">
             <i class="fas fa-handshake"></i>
-            <h2 class="counter" data-target="95" data-suffix="%">0</h2>
-            <p>Client Satisfaction</p>
+            <h2>Collaborative</h2>
+            <p>Communication at every step</p>
         </div>
-
     </div>
 
 </section>
@@ -435,7 +447,7 @@
 
 
 <!-- WORKFLOW SECTION -->
-<section class="workflow section">
+<section class="workflow section" id="process">
 
     <div class="container">
 
@@ -524,47 +536,42 @@
         </div>
 
         <div class="faq-container reveal">
-
             <div class="faq-item">
-                <button class="faq-question">
-                    What recruitment services do you offer?
-                    <i class="fas fa-plus"></i>
+                <button class="faq-question" type="button" aria-expanded="false">
+                    What information should I share for a hiring request?
+                    <i class="fas fa-plus" aria-hidden="true"></i>
                 </button>
-                <div class="faq-answer">
-                    <p>
-                        We offer recruitment, staffing, talent
-                        acquisition and workforce support services.
-                    </p>
-                </div>
+                <div class="faq-answer"><p>Share the role, key skills, experience level, work location and expected hiring timeline. Our team can then understand your requirement.</p></div>
             </div>
-
             <div class="faq-item">
-                <button class="faq-question">
-                    Which industries do you support?
-                    <i class="fas fa-plus"></i>
+                <button class="faq-question" type="button" aria-expanded="false">
+                    What recruitment services do you provide?
+                    <i class="fas fa-plus" aria-hidden="true"></i>
                 </button>
-                <div class="faq-answer">
-                    <p>
-                        We support businesses across industries
-                        such as construction, technology,
-                        healthcare, finance and manufacturing.
-                    </p>
-                </div>
+                <div class="faq-answer"><p>Our service areas include recruitment, staffing, executive search and talent acquisition support. Contact us to discuss the scope that fits your needs.</p></div>
             </div>
-
             <div class="faq-item">
-                <button class="faq-question">
-                    How can I contact your team?
-                    <i class="fas fa-plus"></i>
+                <button class="faq-question" type="button" aria-expanded="false">
+                    I am looking for a job. How can I reach your team?
+                    <i class="fas fa-plus" aria-hidden="true"></i>
                 </button>
-                <div class="faq-answer">
-                    <p>
-                        You can contact our team using the
-                        contact form or the contact details
-                        provided on our website.
-                    </p>
-                </div>
+                <div class="faq-answer"><p>Use the contact form and select “Job opportunity” as your enquiry type. Include your experience, skills and the kind of role you are seeking.</p></div>
             </div>
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    Which industries do you work with?
+                    <i class="fas fa-plus" aria-hidden="true"></i>
+                </button>
+                <div class="faq-answer"><p>Explore the industries section on this page and contact our team to discuss your specific sector and hiring needs.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" type="button" aria-expanded="false">
+                    Does submitting the contact form guarantee a job or placement?
+                    <i class="fas fa-plus" aria-hidden="true"></i>
+                </button>
+                <div class="faq-answer"><p>No. Submitting an enquiry is the first step in a conversation. Any opportunity or recruitment outcome depends on role requirements and the relevant selection process.</p></div>
+            </div>
+        </div>
 
         </div>
 
@@ -622,7 +629,7 @@
                     <i class="fas fa-envelope"></i>
                     <div>
                         <h4>Email</h4>
-                        <p>your-email@example.com</p>
+                        <p>Send your enquiry using the form and our team can follow up.</p>
                     </div>
                 </div>
 
@@ -630,7 +637,7 @@
                     <i class="fas fa-phone"></i>
                     <div>
                         <h4>Phone</h4>
-                        <p>+91 XXXXX XXXXX</p>
+                        <p>Contact details can be shared by our team during follow-up.</p>
                     </div>
                 </div>
 
@@ -638,7 +645,7 @@
                     <i class="fas fa-location-dot"></i>
                     <div>
                         <h4>Location</h4>
-                        <p>Your Company Location</p>
+                        <p>Serving recruitment and staffing requirements across relevant markets.</p>
                     </div>
                 </div>
 
@@ -652,18 +659,24 @@
                 <input type="email" id="email"
                 placeholder="Your Email" required>
 
-                <input type="text" id="subject"
-                placeholder="Subject" required>
+                <select id="subject" name="subject" required>
+                    <option value="" disabled selected>Select enquiry type</option>
+                    <option value="Hiring">I want to hire talent</option>
+                    <option value="Job opportunity">I am looking for a job</option>
+                    <option value="Staffing">I need staffing support</option>
+                    <option value="Other">Other enquiry</option>
+                </select>
 
                 <textarea id="message"
                 placeholder="Your Message" rows="5" required></textarea>
 
                 <button type="submit" class="btn primary-btn">
-                    Send Message
+                    Submit Enquiry
                     <i class="fas fa-paper-plane"></i>
                 </button>
 
-                <p id="formMessage" class="form-message" aria-live="polite"></p>
+                <p id="formMessage" class="form-message" role="status" aria-live="polite"></p>
+                <p class="form-note">This demo form validates your details in the browser. A form delivery service or backend must be connected before it can receive enquiries.</p>
 
             </form>
 
