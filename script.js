@@ -1,368 +1,139 @@
+/* Affinity Steps — interactions */
+"use strict";
 
-/* =====================================
-   1. MOBILE NAVIGATION
-===================================== */
+document.addEventListener("DOMContentLoaded", () => {
+    const menuToggle = document.getElementById("menuToggle");
+    const navLinks = document.getElementById("navLinks");
+    const header = document.getElementById("header");
+    const backToTop = document.getElementById("backToTop");
+    const contactForm = document.getElementById("contactForm");
+    const formMessage = document.getElementById("formMessage");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-const menuToggle = document.getElementById("menuToggle");
-const navLinks = document.getElementById("navLinks");
-
-menuToggle.addEventListener("click", () => {
-
-    const isOpen = navLinks.classList.toggle("show");
-
-    menuToggle.setAttribute("aria-expanded", isOpen);
-
-    menuToggle.innerHTML = isOpen
-        ? '<i class="fas fa-times"></i>'
-        : '<i class="fas fa-bars"></i>';
-
-});
-
-// Close mobile menu after clicking a link
-
-document.querySelectorAll(".nav-links a").forEach(link => {
-
-    link.addEventListener("click", () => {
-
-        navLinks.classList.remove("show");
-
-        menuToggle.setAttribute("aria-expanded", "false");
-
-        menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-
-    });
-
-});
-
-
-/* =====================================
-   2. STICKY NAVBAR SHADOW
-===================================== */
-
-const header = document.getElementById("header");
-
-window.addEventListener("scroll", () => {
-
-    if (window.scrollY > 50) {
-        header.classList.add("scrolled");
-    } else {
-        header.classList.remove("scrolled");
+    // Mobile navigation
+    if (menuToggle && navLinks) {
+        const closeMenu = () => {
+            navLinks.classList.remove("show");
+            menuToggle.setAttribute("aria-expanded", "false");
+            menuToggle.innerHTML = '<i class="fas fa-bars" aria-hidden="true"></i>';
+        };
+        menuToggle.addEventListener("click", () => {
+            const open = navLinks.classList.toggle("show");
+            menuToggle.setAttribute("aria-expanded", String(open));
+            menuToggle.innerHTML = open
+                ? '<i class="fas fa-times" aria-hidden="true"></i>'
+                : '<i class="fas fa-bars" aria-hidden="true"></i>';
+        });
+        navLinks.querySelectorAll("a").forEach(link => link.addEventListener("click", closeMenu));
+        document.addEventListener("keydown", event => {
+            if (event.key === "Escape") closeMenu();
+        });
     }
 
-});
+    // Sticky header and back-to-top state
+    const updateScrollUI = () => {
+        if (header) header.classList.toggle("scrolled", window.scrollY > 30);
+        if (backToTop) backToTop.classList.toggle("show", window.scrollY > 400);
+    };
+    window.addEventListener("scroll", updateScrollUI, { passive: true });
+    updateScrollUI();
 
+    if (backToTop) {
+        backToTop.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: reducedMotion ? "auto" : "smooth" });
+        });
+    }
 
-/* =====================================
-   3. SCROLL REVEAL ANIMATION
-===================================== */
-
-const revealElements = document.querySelectorAll(".reveal");
-
-const prefersReducedMotion =
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-if ("IntersectionObserver" in window && !prefersReducedMotion) {
-
-    const revealObserver = new IntersectionObserver(
-        (entries, observer) => {
-
+    // Reveal on scroll (show everything if IntersectionObserver is unavailable).
+    const revealElements = document.querySelectorAll(".reveal");
+    if ("IntersectionObserver" in window && !reducedMotion) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
-
                 if (entry.isIntersecting) {
-
                     entry.target.classList.add("active");
-
                     observer.unobserve(entry.target);
-
                 }
-
             });
-
-        },
-        {
-            threshold: 0.12
-        }
-    );
-
-    revealElements.forEach(element => {
-        revealObserver.observe(element);
-    });
-
-} else {
-
-    revealElements.forEach(element => {
-        element.classList.add("active");
-    });
-
-}
-
-
-/* =====================================
-   4. ANIMATED STATISTICS COUNTER
-===================================== */
-
-const counters = document.querySelectorAll(".counter");
-
-function animateCounter(counter) {
-
-    const target = Number(counter.dataset.target);
-    const suffix = counter.dataset.suffix || "";
-
-    const duration = 1800;
-    const startTime = performance.now();
-
-    function updateCounter(currentTime) {
-
-        const elapsed = currentTime - startTime;
-
-        const progress = Math.min(elapsed / duration, 1);
-
-        const easedProgress = 1 - Math.pow(1 - progress, 3);
-
-        const currentValue = Math.floor(
-            easedProgress * target
-        );
-
-        counter.textContent = currentValue + suffix;
-
-        if (progress < 1) {
-            requestAnimationFrame(updateCounter);
-        } else {
-            counter.textContent = target + suffix;
-        }
-
-    }
-
-    requestAnimationFrame(updateCounter);
-
-}
-
-if ("IntersectionObserver" in window && !prefersReducedMotion) {
-
-    const counterObserver = new IntersectionObserver(
-        (entries, observer) => {
-
-            entries.forEach(entry => {
-
-                if (entry.isIntersecting) {
-
-                    animateCounter(entry.target);
-
-                    observer.unobserve(entry.target);
-
-                }
-
-            });
-
-        },
-        {
-            threshold: 0.5
-        }
-    );
-
-    counters.forEach(counter => {
-        counterObserver.observe(counter);
-    });
-
-} else {
-
-    counters.forEach(counter => {
-        counter.textContent =
-            counter.dataset.target + (counter.dataset.suffix || "");
-    });
-
-}
-
-
-/* =====================================
-   5. FAQ ACCORDION
-===================================== */
-
-const faqItems = document.querySelectorAll(".faq-item");
-
-faqItems.forEach(item => {
-
-    const question = item.querySelector(".faq-question");
-    const answer = item.querySelector(".faq-answer");
-
-    question.setAttribute("aria-expanded", "false");
-
-    question.addEventListener("click", () => {
-
-        const isOpen = item.classList.contains("open");
-
-        // Close all other FAQ items
-
-        faqItems.forEach(otherItem => {
-
-            otherItem.classList.remove("open");
-
-            otherItem.querySelector(".faq-answer").style.maxHeight = null;
-
-            otherItem.querySelector(".faq-question")
-                .setAttribute("aria-expanded", "false");
-
-        });
-
-        // Open selected item
-
-        if (!isOpen) {
-
-            item.classList.add("open");
-
-            question.setAttribute("aria-expanded", "true");
-
-            answer.style.maxHeight =
-                answer.scrollHeight + "px";
-
-        }
-
-    });
-
-});
-
-
-/* =====================================
-   6. ACTIVE NAVIGATION LINK
-===================================== */
-
-const sections = document.querySelectorAll("section[id]");
-const navItems = document.querySelectorAll(".nav-links a");
-
-const navObserver = new IntersectionObserver(
-    entries => {
-
-        entries.forEach(entry => {
-
-            if (entry.isIntersecting) {
-
-                const currentId = entry.target.id;
-
-                navItems.forEach(link => {
-
-                    link.classList.toggle(
-                        "active-link",
-                        link.getAttribute("href") === "#" + currentId
-                    );
-
-                });
-
-            }
-
-        });
-
-    },
-    {
-        rootMargin: "-25% 0px -65% 0px"
-    }
-);
-
-sections.forEach(section => {
-    navObserver.observe(section);
-});
-
-
-/* =====================================
-   7. BACK TO TOP BUTTON
-===================================== */
-
-const backToTop = document.getElementById("backToTop");
-
-window.addEventListener("scroll", () => {
-
-    if (window.scrollY > 400) {
-
-        backToTop.classList.add("show");
-
+        }, { threshold: 0.12 });
+        revealElements.forEach(element => revealObserver.observe(element));
     } else {
-
-        backToTop.classList.remove("show");
-
+        revealElements.forEach(element => element.classList.add("active"));
     }
 
-});
-
-backToTop.addEventListener("click", () => {
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
+    // Accessible single-open FAQ accordion.
+    document.querySelectorAll(".faq-item").forEach(item => {
+        const question = item.querySelector(".faq-question");
+        const answer = item.querySelector(".faq-answer");
+        if (!question || !answer) return;
+        question.setAttribute("aria-expanded", "false");
+        question.addEventListener("click", () => {
+            const shouldOpen = !item.classList.contains("open");
+            document.querySelectorAll(".faq-item").forEach(other => {
+                other.classList.remove("open");
+                const otherAnswer = other.querySelector(".faq-answer");
+                const otherQuestion = other.querySelector(".faq-question");
+                if (otherAnswer) otherAnswer.style.maxHeight = null;
+                if (otherQuestion) otherQuestion.setAttribute("aria-expanded", "false");
+            });
+            if (shouldOpen) {
+                item.classList.add("open");
+                question.setAttribute("aria-expanded", "true");
+                answer.style.maxHeight = answer.scrollHeight + "px";
+            }
+        });
     });
 
-});
-
-
-/* =====================================
-   8. CONTACT FORM VALIDATION
-===================================== */
-
-const contactForm = document.getElementById("contactForm");
-
-const formMessage = document.getElementById("formMessage");
-
-contactForm.addEventListener("submit", function(event) {
-
-    event.preventDefault();
-
-    const name = document.getElementById("name").value.trim();
-
-    const email = document.getElementById("email").value.trim();
-
-    const subject = document.getElementById("subject").value.trim();
-
-    const message = document.getElementById("message").value.trim();
-
-    const emailPattern =
-        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!name || !email || !subject || !message) {
-
-        formMessage.style.color = "#dc2626";
-
-        formMessage.textContent =
-            "Please fill in all the fields.";
-
-        return;
-
+    // Active navigation link.
+    const navItems = document.querySelectorAll(".nav-links a");
+    const sections = document.querySelectorAll("section[id]");
+    if ("IntersectionObserver" in window && navItems.length) {
+        const navObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) return;
+                navItems.forEach(link => {
+                    link.classList.toggle("active-link", link.getAttribute("href") === "#" + entry.target.id);
+                });
+            });
+        }, { rootMargin: "-28% 0px -62% 0px" });
+        sections.forEach(section => navObserver.observe(section));
     }
 
-    if (!emailPattern.test(email)) {
+    // Carry employer/candidate intent into the enquiry form.
+    document.querySelectorAll("[data-interest]").forEach(link => {
+        link.addEventListener("click", () => {
+            const subject = document.getElementById("subject");
+            if (subject) subject.value = link.dataset.interest;
+        });
+    });
 
-        formMessage.style.color = "#dc2626";
+    // Front-end validation only. No enquiry is claimed to be sent.
+    if (contactForm && formMessage) {
+        contactForm.addEventListener("submit", event => {
+            event.preventDefault();
+            const name = document.getElementById("name")?.value.trim() || "";
+            const email = document.getElementById("email")?.value.trim() || "";
+            const subject = document.getElementById("subject")?.value || "";
+            const message = document.getElementById("message")?.value.trim() || "";
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        formMessage.textContent =
-            "Please enter a valid email address.";
-
-        return;
-
+            if (!name || !email || !subject || !message) {
+                formMessage.style.color = "#B91C1C";
+                formMessage.textContent = "Please complete all fields before submitting.";
+                return;
+            }
+            if (!emailPattern.test(email)) {
+                formMessage.style.color = "#B91C1C";
+                formMessage.textContent = "Please enter a valid email address.";
+                return;
+            }
+            formMessage.style.color = "#0F766E";
+            formMessage.textContent = "Your details look good. This website form still needs a backend or form service to deliver your enquiry.";
+        });
     }
 
-    formMessage.style.color = "#15803d";
+    // Current year
+    const copyright = document.querySelector(".footer-bottom p");
+    if (copyright) copyright.textContent = `© ${new Date().getFullYear()} Affinity Steps. All Rights Reserved.`;
 
-    formMessage.textContent =
-        "Form validated successfully! Connect a backend to send your enquiry.";
-
-    contactForm.reset();
-
+    console.log("Affinity Steps landing page ready.");
 });
-
-
-/* =====================================
-   9. CURRENT YEAR
-===================================== */
-
-const copyright = document.querySelector(".footer-bottom p");
-
-if (copyright) {
-
-    copyright.textContent =
-        `© ${new Date().getFullYear()} Affinity Steps. All Rights Reserved.`;
-
-}
-
-
-/* =====================================
-   10. CONSOLE MESSAGE
-===================================== */
-
-console.log("Affinity Steps Landing Page Loaded Successfully!");
