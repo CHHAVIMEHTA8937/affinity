@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
             formMessage.style.color = "#0F766E";
-            formMessage.textContent = "Your details look good. This website form still needs a backend or form service to deliver your enquiry.";
+            formMessage.textContent = "The form is not connected yet, so your enquiry has not been sent. Please do not enter confidential information.";
         });
     }
 
