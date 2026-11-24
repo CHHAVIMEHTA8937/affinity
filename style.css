@@ -1487,3 +1487,20 @@ p { line-height: 1.75; }
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+
+/* Feedback implementation: tighter page rhythm and new form fields */
+.section { padding: 68px 0; }
+.contact-form { display: grid; gap: 14px; }
+.contact-form input, .contact-form select, .contact-form textarea { box-sizing: border-box; }
+.candidate-note { grid-column: 1 / -1; margin: 0; color: var(--text); }
+.candidate-note a { color: var(--primary); font-weight: 700; }
+.footer-grid { grid-template-columns: 1.4fr 1fr 1fr; }
+.footer-links span { display: block; margin: 0 0 12px; color: #CBD5E1; }
+@media (max-width: 768px) {
+  .section { padding: 54px 0; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 480px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}
